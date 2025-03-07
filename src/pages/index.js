@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import ArticleCard from "@/components/ArticleCard";
 import CategoryFilter from "@/components/CategoryFiler";
+import DarkmodeToggle from "@/components/DarkModeToggle";
+
 
 export default function Home() {
   const [articles, setArticles] = useState([]);
@@ -25,6 +27,7 @@ export default function Home() {
 
   return (
     <div>
+      <DarkmodeToggle />
       <h1>Latest News</h1>
       <CategoryFilter setCategory={setCategory} />
       {articles.length > 0 ? (
