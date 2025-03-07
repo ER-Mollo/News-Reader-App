@@ -24,14 +24,18 @@ export default function NewsList() {
   }, []);
 
   return (
-    <div>
-      {error && <p>{error}</p>}
+    <div className="container mx-auto p-4">
+      {error && (
+        <p className="text-red-500 text-center font-semibold mb-4">{error}</p>
+      )}
       {articles.length > 0 ? (
-        articles.map((article, index) => (
-          <ArticleCard key={index} article={article} />
-        ))
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {articles.map((article, index) => (
+            <ArticleCard key={index} article={article} />
+          ))}
+        </div>
       ) : (
-        <p>Loading news...</p>
+        <p className="text-center text-gray-500">Loading news...</p>
       )}
     </div>
   );

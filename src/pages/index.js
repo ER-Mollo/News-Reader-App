@@ -43,32 +43,39 @@ export default function Home() {
   }, [category]);
 
   return (
-    <div>
-      <header>
-        <h1>📰 News Reader App</h1>
+    <div className="min-h-screen bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white">
+      <header className="bg-blue-600 text-white py-4 px-6 shadow-md flex items-center justify-between">
+        <h1 className="text-2xl font-bold">📰 News Reader App</h1>
         <DarkmodeToggle />
       </header>
 
-      <CategoryFilter category={category} setCategory={setCategory} />
+      <main className="container mx-auto py-6 px-4">
+        <CategoryFilter className="mb-4" category={category} setCategory={setCategory} />
 
-      {error && <p className="text-red-500">{error}</p>}
-      {loading && <p>Loading news...</p>}
+        {error && <p className="text-red-500">{error}</p>}
+        {loading && <p className="text-blue-500">Loading news...</p>}
 
-      <div>
-        {articles.length > 0 ? (
-          articles.map((article, index) => (
-            <ArticleCard key={index} article={article} />
-          ))
-        ) : (
-          <p>No articles found.</p>
-        )}
-      </div>
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {articles.length > 0 ? (
+            articles.map((article, index) => (
+              <ArticleCard key={index} article={article} />
+            ))
+          ) : (
+            <p className="col-span-full text-center">No articles found.</p>
+          )}
+        </div>
 
-      {/* Saved Articles Section */}
-      <button onClick={() => window.location.href = "/saved-articles"}>
-        View Saved Articles
-      </button>
-      <SavedArticles />
+        {/* Saved Articles Section */}
+        <div className="mt-8 text-center">
+          <button
+            onClick={() => window.location.href = "/saved-articles"}
+            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+          >
+            View Saved Articles
+          </button>
+        </div>
+      </main>
     </div>
   );
 }
+
