@@ -1,33 +1,31 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import ArticleCard from "@/components/ArticleCard";
 
-export default function Home() {
+export default function NewsList() {
   const [articles, setArticles] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch news articles from NewsAPI
     const fetchNews = async () => {
       try {
+        setError(null);
         const apiKey = process.env.NEXT_PUBLIC_NEWS_API_KEY;
-        const response = await fetch(
+        const response = await axios.get(
           `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`
         );
-        const data = await response.json();
-        setArticles(data.articles || []);
-      } catch (error) {
-        console.error("Error fetching news:", error);
+        setArticles(response.data.articles);
+      } catch (err) {
+        setError("Failed to fetch news. Please try again.");
       }
     };
-    
 
     fetchNews();
   }, []);
 
   return (
     <div>
-      <h1>Latest News</h1>
-
-      {/* Display list of articles */}
+      {error && <p>{error}</p>}
       {articles.length > 0 ? (
         articles.map((article, index) => (
           <ArticleCard key={index} article={article} />
